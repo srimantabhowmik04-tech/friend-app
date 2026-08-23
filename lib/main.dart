@@ -4,6 +4,7 @@ void main() {
   runApp(const FriendApp());
 }
 
+// Sub-step 2.1: অ্যাপের মূল কাঠামো ও বেসিক স্ট্রাকচার
 class FriendApp extends StatelessWidget {
   const FriendApp({super.key});
 
@@ -13,27 +14,35 @@ class FriendApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Personal Friend App',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.indigo,
         useMaterial3: true,
       ),
-      home: const FriendListScreen(),
+      home: const FriendHomeScreen(),
     );
   }
 }
 
-// 1. Friend List Screen (Frontend & Navigation)
-class FriendListScreen extends StatelessWidget {
-  const FriendListScreen({super.key});
-
-  final List<Map<String, String>> friends = const [
-    {'name': 'Rahul Sharma', 'status': 'Online', 'phone': '+91 98765 43210'},
-    {'name': 'Ananya Roy', 'status': 'Busy', 'phone': '+91 87654 32109'},
-    {'name': 'Arijit Das', 'status': 'Offline', 'phone': '+91 76543 21098'},
-  ];
+class FriendHomeScreen extends StatelessWidget {
+  const FriendHomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // এখানে Scaffold দিয়ে অ্যাপের মূল কাঠামো (AppBar এবং Body) তৈরি করা হয়েছে
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('My Personal Friends'),
+        backgroundColor: Colors.indigo,
+        foregroundColor: Colors.white,
+      ),
+      body: const Center(
+        child: Text(
+          'Step 2.1 Complete: App Structure Ready!',
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+      ),
+    );
+  }
+}
       appBar: AppBar(
         title: const Text('My Friends'),
         backgroundColor: Colors.blueAccent,
