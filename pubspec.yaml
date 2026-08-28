@@ -1,15 +1,19 @@
 name: friend_app
-description: A personal friend app built with Flutter.
-publish_to: 'none'
+description: "A modern social media application for friends."
+publish_to: "none"
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
+  sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  cupertino_icons: ^1.0.2
+  firebase_core: ^2.27.0
+  firebase_auth: ^4.17.8
+  cloud_firestore: ^4.15.8
+  google_mobile_ads: ^5.0.0
+  intl: ^0.19.0
 
 dev_dependencies:
   flutter_test:
