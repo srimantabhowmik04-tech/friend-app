@@ -1,10 +1,10 @@
-name: Build Mini Social APK
+name: Build Friend App Debug APK
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main ]
   pull_request:
-    branches: [ main, master ]
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
@@ -26,6 +26,9 @@ jobs:
         with:
           channel: 'stable'
 
+      - name: Recreate Android Project Files if Missing
+        run: flutter create . --platforms=android --org com.friendapp
+
       - name: Install Dependencies
         run: flutter pub get
 
@@ -35,5 +38,5 @@ jobs:
       - name: Upload Debug APK
         uses: actions/upload-artifact@v4
         with:
-          name: mini-social-debug-apk
+          name: friend-app-debug-apk
           path: build/app/outputs/flutter-apk/app-debug.apk
