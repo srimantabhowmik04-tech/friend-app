@@ -1,18 +1,22 @@
-name: Build Flutter APK
+name: Build Friend-app Debug APK
 
 on:
   push:
+    branches: [ main, srimanta ]
+  pull_request:
     branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Set up Java
-        uses: actions/setup-java@v4
+      - name: Set up Java 17
+        uses: actions/setup-java@v3
         with:
           distribution: 'zulu'
           java-version: '17'
@@ -20,17 +24,23 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.19.0'
           channel: 'stable'
 
-      - name: Get dependencies
+      - name: Create Dummy google-services.json if missing
+        run: |
+          mkdir -p android/app
+          if [ ! -f "android/app/google-services.json" ]; then
+            echo '{"project_info":{"project_number":"123456789","project_id":"friend-app","storage_bucket":"friend-app.appspot.com"},"client":[{"client_info":{"mobilesdk_app_id":"1:123456789:android:abcdef","android_client_info":{"package_name":"com.guffy.social"}},"oauth_client":[],"api_key":[{"current_key":"dummy_api_key"}],"services":{"analytics_service":{"status":1}}}]}' > android/app/google-services.json
+          fi
+
+      - name: Install Dependencies
         run: flutter pub get
 
       - name: Build APK
-        run: flutter build apk --release
+        run: flutter build apk --debug
 
-      - name: Upload APK
+      - name: Upload Debug APK
         uses: actions/upload-artifact@v4
         with:
-          name: release-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+          name: friend-app-debug-apk
+          path: build/app/outputs/flutter-apk/app-debug.apk
