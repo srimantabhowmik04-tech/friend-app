@@ -1,10 +1,10 @@
-name: Build Friend-app Debug APK
+name: Build Mini Social APK
 
 on:
   push:
-    branches: [ main, srimanta ]
+    branches: [ main, master ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, master ]
   workflow_dispatch:
 
 jobs:
@@ -26,21 +26,14 @@ jobs:
         with:
           channel: 'stable'
 
-      - name: Create Dummy google-services.json if missing
-        run: |
-          mkdir -p android/app
-          if [ ! -f "android/app/google-services.json" ]; then
-            echo '{"project_info":{"project_number":"123456789","project_id":"friend-app","storage_bucket":"friend-app.appspot.com"},"client":[{"client_info":{"mobilesdk_app_id":"1:123456789:android:abcdef","android_client_info":{"package_name":"com.guffy.social"}},"oauth_client":[],"api_key":[{"current_key":"dummy_api_key"}],"services":{"analytics_service":{"status":1}}}]}' > android/app/google-services.json
-          fi
-
       - name: Install Dependencies
         run: flutter pub get
 
-      - name: Build APK
+      - name: Build Debug APK
         run: flutter build apk --debug
 
       - name: Upload Debug APK
         uses: actions/upload-artifact@v4
         with:
-          name: friend-app-debug-apk
+          name: mini-social-debug-apk
           path: build/app/outputs/flutter-apk/app-debug.apk
