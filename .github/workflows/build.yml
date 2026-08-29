@@ -1,4 +1,4 @@
-name: Build Friend App Debug APK
+name: Build Golpogram Release APK
 
 on:
   push:
@@ -26,17 +26,17 @@ jobs:
         with:
           channel: 'stable'
 
-      - name: Recreate Android Project Files if Missing
-        run: flutter create . --platforms=android --org com.friendapp
+      - name: Generate Android Scaffold
+        run: flutter create . --platforms=android --org com.golpogram
 
       - name: Install Dependencies
         run: flutter pub get
 
-      - name: Build Debug APK
-        run: flutter build apk --debug
+      - name: Build Split Release APKs (Small Size)
+        run: flutter build apk --release --split-per-abi
 
-      - name: Upload Debug APK
+      - name: Upload Small Release APKs
         uses: actions/upload-artifact@v4
         with:
-          name: friend-app-debug-apk
-          path: build/app/outputs/flutter-apk/app-debug.apk
+          name: golpogram-small-apks
+          path: build/app/outputs/flutter-apk/*.apk
